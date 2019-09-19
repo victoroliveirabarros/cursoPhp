@@ -1,0 +1,23 @@
+--Comandos Git
+criar a estrutura de um repositório remoto
+- git init
+
+- git add (nome_arquivo).(extensão)
+- git add --all (todas as alterações do projeto para a Stage area)
+- git commit -m "(Comentário do commit)"
+
+
+--config git
+
+- git config --global user.name "Victor WBT"
+- git config --global user.email "victoroliveirabarros@outlook.com"
+
+------------------------------
+-- Acessa a pasta repositório (cd /bla/bla/bla.php) 
+
+- git remote add origin (url github)
+
+- git push origin master (email e senha github)
+
+-- resolvendo conflitos
+- git pull origin master
