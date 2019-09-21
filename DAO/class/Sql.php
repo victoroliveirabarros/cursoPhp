@@ -6,12 +6,11 @@ class Sql extends PDO {
 
     public function __construct(){
 
-        $this->conn =new PDO("mysql:host=localhost;dbname=rede_olt", "wbt", "abc@1234WBT");
-
+        $this->conn =new PDO("mysql:host=localhost;dbname=rede_olt", "root", "");
 
     }
     
-    private function setParams($statment, $parameters){
+    /*private function setParams($statment, $parameters = array()){
         
         foreach($parameters as $key => $value){
 
@@ -25,7 +24,17 @@ class Sql extends PDO {
 
         $statment->bindParam($key, $value);
 
-    }
+    }*/
+
+    private function setParams($statement, $parameters = array()){
+		foreach ($parameters as $key => $value) {
+			
+			$this->setParam($statement, $key, $value);
+		}
+	}
+	private function setParam($statement, $key, $value){
+		$statement->bindParam($key, $value);
+	}
 
     public function query($rawQuery, $params = array()){
 
