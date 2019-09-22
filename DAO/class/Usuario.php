@@ -150,6 +150,57 @@ class Usuario {
 
     }
 
+    public static function getList(){
+        $sql = new Sql();
+
+        return $sql->select("SELECT * FROM usuarios ORDER BY nome");
+
+    }
+
+    public static function search($nome){
+        $sql = new Sql();
+
+        return $sql->select("SELECT * FROM usuarios WHERE nome LIKE :SEARCH ORDER BY nome", array(
+            ':SEARCH'=>"%".$nome."%"
+        ));
+
+    }
+
+    public function login($login, $senha){
+
+        $sql = new Sql();
+
+        $results = $sql->select("SELECT * FROM usuarios WHERE nome = :NOME AND senha = :SENHA", array(
+            ":NOME"=>$login,
+            ":SENHA"=>SHA($senha);
+            ));
+
+        if(count($results) > 0){
+            
+            $row = $results[0];
+
+            $this->setId($row['id']);
+            $this->setNome($row['nome']);
+            $this->setUsuario($row['usuario']);
+            $this->setSenha($row['senha']);
+            $this->setEmail($row['email']);
+            $this->setNivel($row['nivel']);
+            $this->setAtivo($row['ativo']);
+            $this->setCadastro(new DateTime($row['cadastro']));
+            $this->setCelular($row['celular']);
+            $this->setIdTelegram($row['id_telegram']);
+            $this->setPermissaoTelegram($row['permissao_telegram']);
+            $this->setFirstAccess($row['first_access']);
+            $this->setGrupo($row['grupo']);
+
+
+
+
+        }else{
+            throw new Exception("Login e/ou senha inválidos!!!");
+        }
+    }
+
     public function __toString(){
         return json_encode(array(
             "id"=>$this->getId(),
