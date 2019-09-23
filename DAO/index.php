@@ -39,13 +39,24 @@ $aluno->insert();
 echo $aluno;*/
 
 //Update de um usuário
-$usuario = new Usuario();
+/*$usuario = new Usuario();
 
 $usuario->loadById(2);
 
 $usuario->update("user", "senha");
 
+echo $usuario;*/
+
+//criando o método Delete
+$usuario = new Usuario();
+
+$usuario->loadById(2);
+
+$usuario->delete();
+
 echo $usuario;
+
+
 
 
 ?>

@@ -191,7 +191,7 @@ class Usuario {
         $sql = new Sql();
 
         $results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :SENHA)", array(
-            ":LOGIN"=>$this->getNome(),
+            ":LOGIN"=>$this->getUsuario(),
             ":SENHA"=>$this->getSenha()
         ));
 
@@ -203,17 +203,39 @@ class Usuario {
 
     public function update($login, $senha){
 
-        $this->setNome($login);
+        $this->setUsuario($login);
         $this->setSenha($senha);
 
         $sql = new Sql();
 
         $sql->query("UPDATE usuarios SET nome = :LOGIN, senha = :SENHA WHERE id =  :ID", array(
-            ':LOGIN'=>$this->getNome(),
+            ':LOGIN'=>$this->getUsuario(),
             ':SENHA'=>$this->getSenha(),
             ':ID'=>$this->getId()
         ));
 
+    }
+
+    public function delete(){
+        $sql = new Sql();
+
+        $sql->query("DELETE FROM usuarios WHERE id = :ID", array(
+            ':ID'=>$this->getId()
+        ));
+
+        $this->setId(0);
+        $this->setNome("");
+        $this->setUsuario("");
+        $this->setSenha("");
+        $this->setEmail("");
+        $this->setNivel(0);
+        $this->setAtivo(0);
+        $this->setCadastro(new DateTime());
+        $this->setCelular("");
+        $this->setIdTelegram(0);
+        $this->setPermissaoTelegram(0);
+        $this->setFirstAccess(0);
+        $this->setGrupo(0);
     }
 
     public function __construct($nome = "", $senha = ""){
