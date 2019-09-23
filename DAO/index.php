@@ -28,13 +28,24 @@ $usuario->login("user", "senha");
 
 echo $usuario;*/
 
-$aluno = new Usuario("nome", "senha");
+//criando um insert
+/*$aluno = new Usuario("nome", "senha");
 
 //$aluno->setNome("Vics");
 //$aluno->setSenha("Senha");
 
 $aluno->insert();
 
-echo $aluno;
+echo $aluno;*/
+
+//Update de um usuário
+$usuario = new Usuario();
+
+$usuario->loadById(2);
+
+$usuario->update("user", "senha");
+
+echo $usuario;
+
 
 ?>
