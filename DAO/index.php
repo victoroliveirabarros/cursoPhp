@@ -23,15 +23,18 @@ echo json_encode($lista);*/
 echo json_encode($search);*/
 
 //carrega um usuario usando o login e a senha
-$usuario = new Usuario();
+/*$usuario = new Usuario();
 $usuario->login("user", "senha");
 
-echo $usuario;
+echo $usuario;*/
 
+$aluno = new Usuario("nome", "senha");
 
+//$aluno->setNome("Vics");
+//$aluno->setSenha("Senha");
 
+$aluno->insert();
 
-
-
+echo $aluno;
 
 ?>

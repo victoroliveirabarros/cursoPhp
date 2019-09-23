@@ -130,21 +130,7 @@ class Usuario {
 
         if(count($results) > 0){
             
-            $row = $results[0];
-
-            $this->setId($row['id']);
-            $this->setNome($row['nome']);
-            $this->setUsuario($row['usuario']);
-            $this->setSenha($row['senha']);
-            $this->setEmail($row['email']);
-            $this->setNivel($row['nivel']);
-            $this->setAtivo($row['ativo']);
-            $this->setCadastro(new DateTime($row['cadastro']));
-            $this->setCelular($row['celular']);
-            $this->setIdTelegram($row['id_telegram']);
-            $this->setPermissaoTelegram($row['permissao_telegram']);
-            $this->setFirstAccess($row['first_access']);
-            $this->setGrupo($row['grupo']);
+            $this->setData($results[0]);
 
         }
 
@@ -172,33 +158,52 @@ class Usuario {
 
         $results = $sql->select("SELECT * FROM usuarios WHERE nome = :NOME AND senha = :SENHA", array(
             ":NOME"=>$login,
-            ":SENHA"=>SHA($senha);
+            ":SENHA"=>SHA($senha)
             ));
 
         if(count($results) > 0){
-            
-            $row = $results[0];
 
-            $this->setId($row['id']);
-            $this->setNome($row['nome']);
-            $this->setUsuario($row['usuario']);
-            $this->setSenha($row['senha']);
-            $this->setEmail($row['email']);
-            $this->setNivel($row['nivel']);
-            $this->setAtivo($row['ativo']);
-            $this->setCadastro(new DateTime($row['cadastro']));
-            $this->setCelular($row['celular']);
-            $this->setIdTelegram($row['id_telegram']);
-            $this->setPermissaoTelegram($row['permissao_telegram']);
-            $this->setFirstAccess($row['first_access']);
-            $this->setGrupo($row['grupo']);
-
-
-
+            $this->setData($results[0]);
 
         }else{
             throw new Exception("Login e/ou senha inválidos!!!");
         }
+    }
+
+    public function setData($data){
+        $this->setId($data['id']);
+        $this->setNome($data['nome']);
+        $this->setUsuario($data['usuario']);
+        $this->setSenha($data['senha']);
+        $this->setEmail($data['email']);
+        $this->setNivel($data['nivel']);
+        $this->setAtivo($data['ativo']);
+        $this->setCadastro(new DateTime($data['cadastro']));
+        $this->setCelular($data['celular']);
+        $this->setIdTelegram($data['id_telegram']);
+        $this->setPermissaoTelegram($data['permissao_telegram']);
+        $this->setFirstAccess($data['first_access']);
+        $this->setGrupo($data['grupo']);
+
+    }
+
+    public function insert(){
+        $sql = new Sql();
+
+        $results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :SENHA)", array(
+            ":LOGIN"=>$this->getNome(),
+            ":SENHA"=>$this->getSenha()
+        ));
+
+        if(count($results) > 0){
+            $this->setData($results[0]);
+        }
+
+    }
+
+    public function __construct($nome = "", $senha = ""){
+        $this->setNome($login);
+        $this->setSenha($senha);
     }
 
     public function __toString(){
